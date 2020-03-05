@@ -1,68 +1,71 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# My Car PWA
 
-## Available Scripts
+A little demo web application that shows how you can create a website that fetches data from an API and that
+users can access again at a later point, even if they don't have an internet connection of the web server
+is offline.
 
-In the project directory, you can run:
+## How to Run
 
-### `yarn start`
+Install npm dependencies:
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```
+yarn
+```
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+Build production bundles:
 
-### `yarn test`
+```
+yarn build
+```
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Add global Yarn command `serve`:
 
-### `yarn build`
+```
+yarn global add serve
+```
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Use `serve` command to run a web server with the demo app:
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+```
+serve -s build
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## How to Test
 
-### `yarn eject`
+When the local server is running, go to the web page:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- http://localhost:5000/
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+A beautiful designed list of cars for sale should be shown. The data is fetched from this API:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- https://fakecarsapi.appspot.com/
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Now, let's try it offline:
 
-## Learn More
+- kill the server you started with `serve` by hitting Ctrl+C
+- disconnect your computer from the internet
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+If you hit the reload button in the browser now, the page with the cars will still be displayed.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## How It Works
 
-### Code Splitting
+Create React App already has caching through service workers built in, if you enable it by changing `unregister` to `register` in the index.js module.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+By default, however, only JavaScript and CSS bundles are cached.
 
-### Analyzing the Bundle Size
+For our demo to work, we also need to cache the car images, the HTML page and the data returned from the Fake Cars API.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+This article explains how to override the default service worker setup of CRA:
 
-### Making a Progressive Web App
+* https://www.freecodecamp.org/news/how-to-build-a-pwa-with-create-react-app-and-custom-service-workers-376bd1fdc6d3/
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+In the root of this repository, you can see the two files that make the caching of the demo happen:
 
-### Advanced Configuration
+* `service-worker.tmpl`
+* `sw-precache-config.js`
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+## License
 
-### Deployment
+[MIT licensed](LICENSE)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Copyright © 2020 mobile.de GmbH
